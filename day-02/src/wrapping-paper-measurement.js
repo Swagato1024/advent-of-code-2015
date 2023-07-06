@@ -1,15 +1,21 @@
 class GiftBox {
-  #length
-  #width
-  #height
+  #length;
+  #width;
+  #height;
 
-  constructor() {
-
+  constructor(length, width, height) {
+    this.#length = length;
+    this.#width = width;
+    this.#height = height;
   }
 
   calculateSurfaceArea() {
-    return 1;
+    const l = this.#length;
+    const h = this.#height;
+    const w = this.#width;
+
+    return 2 * (l * w + w * h + h * l);
   }
 }
 
-module.exports = {GiftBox};
+module.exports = { GiftBox };
