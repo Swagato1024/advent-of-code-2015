@@ -32,6 +32,10 @@ class GiftBox {
   giftWrapperArea() {
     return this.surfaceArea() + this.#areaOfSmallestSide();
   }
+
+  volume() {
+    return this.#height * this.#width * this.#length;
+  }
 }
 
 const format = (giftBoxDimension) => {
@@ -59,4 +63,9 @@ const determineRequiredGiftWrapper = (giftBoxes) => {
   return sumAll(areaOfwrappers);
 };
 
-module.exports = { GiftBox, createGiftBoxes, createGiftBox, determineRequiredGiftWrapper };
+module.exports = {
+  GiftBox,
+  createGiftBoxes,
+  createGiftBox,
+  determineRequiredGiftWrapper,
+};

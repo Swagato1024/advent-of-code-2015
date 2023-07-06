@@ -68,6 +68,18 @@ describe("GiftBox", () => {
         height: 27,
       });
     });
+
+    describe("volume", () => {
+      it("should be 1 when all dimensions are of 1 unit", () => {
+        const dimension = { length: 1, width: 1, height: 1 };
+        const giftBox = new GiftBox(dimension);
+
+        const actual = giftBox.volume();
+        const expected = 1;
+        
+        strictEqual(actual, expected);
+      })
+    })
   });
 
   describe("determineRequiredGiftWrapper", () => {
