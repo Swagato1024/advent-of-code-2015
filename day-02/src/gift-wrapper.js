@@ -3,7 +3,7 @@ class GiftBox {
   #width;
   #height;
 
-  constructor(length, width, height) {
+  constructor({ length, width, height }) {
     this.#length = length;
     this.#width = width;
     this.#height = height;
@@ -34,6 +34,29 @@ class GiftBox {
   }
 }
 
+const format = (giftBoxDimension) => {
+  const [length, width, height] = giftBoxDimension.split("x").map((n) => +n);
+  return { length, width, height };
+};
 
+const createGiftBox = (dimension) => new GiftBox(dimension);
 
-module.exports = { GiftBox };
+const createGiftBoxes = (dimensionsAsText, giftMaker) => {
+  if (dimensionsAsText.length === 0) return [];
+
+  const dimensions = dimensionsAsText.split("\n").map(format);
+
+  return dimensions.map(giftMaker);
+};
+
+const sumAll = (list) =>
+  list.reduce((sum, element) => {
+    return sum + element;
+  }, 0);
+
+const determineRequiredGiftWrapper = (giftBoxes) => {
+  const areaOfwrappers = giftBoxes.map((giftBox) => giftBox.giftWrapperArea());
+  return sumAll(areaOfwrappers);
+};
+
+module.exports = { GiftBox, createGiftBoxes, createGiftBox, determineRequiredGiftWrapper };

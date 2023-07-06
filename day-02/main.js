@@ -1,10 +1,10 @@
-const { GiftBox } = require("./src/gift-wrapper");
+const fs = require('fs');
+
+const { GiftBox, createGiftBoxes } = require("./src/gift-wrapper");
 
 const main = () => {
-  const giftBox = new GiftBox(2, 3, 4);
+  const dimensions = fs.readFileSync("./resources/puzzle-input.txt", "utf-8");
 
-  console.log(giftBox.surfaceArea());
-  console.log(giftBox.giftWrapperArea());
 };
 
 main();
