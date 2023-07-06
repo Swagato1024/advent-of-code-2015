@@ -16,6 +16,13 @@ class GiftBox {
 
     return 2 * (l * w + w * h + h * l);
   }
+
+  calculateAreaOfSmallestSide() {
+    const dimensions = [this.#length, this.#width, this.#height];
+    const smallerSides = dimensions.sort((a, b) => a - b).slice(0, 2);
+
+    return smallerSides.reduce((a, b) => a * b);
+  }
 }
 
 module.exports = { GiftBox };

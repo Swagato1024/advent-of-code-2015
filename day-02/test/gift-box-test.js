@@ -21,4 +21,14 @@ describe("GiftBox", () => {
       strictEqual(actual, expected);
     });
   });
+
+  describe("calculateAreaOfSmallestSide", () => {
+    it("should calculate smallest side area of gift box", () => {
+      const giftBox = new GiftBox(2, 3, 4);
+      const actual = giftBox.calculateAreaOfSmallestSide();
+      const expected = 6;
+
+      strictEqual(actual, expected);
+    });
+  });
 });
