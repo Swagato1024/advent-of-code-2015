@@ -23,6 +23,14 @@ describe("GiftBox", () => {
   });
 
   describe("calculateAreaOfSmallestSide", () => {
+    it("should smallest side area be 0 when any of the dimensions are 0", () => {
+      const giftBox = new GiftBox(2, 0, 4);
+      const actual = giftBox.calculateAreaOfSmallestSide();
+      const expected = 0;
+
+      strictEqual(actual, expected);
+    });
+
     it("should calculate smallest side area of gift box", () => {
       const giftBox = new GiftBox(2, 3, 4);
       const actual = giftBox.calculateAreaOfSmallestSide();
@@ -31,4 +39,5 @@ describe("GiftBox", () => {
       strictEqual(actual, expected);
     });
   });
+
 });
