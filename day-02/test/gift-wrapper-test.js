@@ -1,134 +1,92 @@
 const { describe, it } = require("node:test");
 const { strictEqual, deepStrictEqual } = require("assert");
+const { GiftBox } = require("../src/gift-box");
 const {
-  GiftBox,
   createGiftBoxes,
   determineRequiredGiftWrapper,
   determineRibbonLength,
+  extractDimensions,
+  getSingleBoxDimensions,
 } = require("../src/gift-wrapper");
 
-describe("GiftBox", () => {
-  describe("surfaceArea", () => {
-    it("should be 6sq unit when all of its dimensions are one unit", () => {
-      const dimension = { length: 1, width: 1, height: 1 };
-      const giftBox = new GiftBox(dimension);
+// describe.skip("createGiftBoxes", () => {
+// it("should create gift box of specified dimensions", (context) => {
+//   const dimensions = "7x5x27";
+//   const createGiftBox = context.mock.fn();
 
-      const actual = giftBox.surfaceArea();
-      const expected = 6;
+//   createGiftBoxes(dimensions, createGiftBox);
 
-      strictEqual(actual, expected);
-    });
+//   strictEqual(createGiftBox.mock.callCount(), 1);
+//   deepStrictEqual(createGiftBox.mock.calls[0].arguments[0], {
+//     length: 7,
+//     width: 5,
+//     height: 27,
+//   });
+// });
 
-    it("should be the sum of areas covered by its six faces", () => {
-      let dimension = { length: 2, width: 3, height: 4 };
-      const giftBox1 = new GiftBox(dimension);
+//   it("should ")
+// });
 
-      dimension = { length: 1, width: 1, height: 10 };
-      const giftBox2 = new GiftBox(dimension);
+describe("extractDimensions", () => {
+  it("should extract dimensions of a single box", () => {
+    const rawDimensions = "7x5x27";
+    const actual = extractDimensions(rawDimensions);
+    const expected = [{ length: 7, width: 5, height: 27 }];
 
-      strictEqual(giftBox1.surfaceArea(), 52);
-      strictEqual(giftBox2.surfaceArea(), 42);
-    });
+    deepStrictEqual(actual, expected);
   });
 
-  describe("giftWrapperArea", () => {
-    it("should  be the sum of surface area and the area of extra paper", () => {
-      let dimension = { length: 2, width: 3, height: 4 };
-      const giftBox1 = new GiftBox(dimension);
+  it("should extract dimensions of multiple boxes", () => {
+    const rawDimensions = "7x5x27\n2x3x4";
+    const actual = extractDimensions(rawDimensions);
+    const expected = [
+      { length: 7, width: 5, height: 27 },
+      { length: 2, width: 3, height: 4 },
+    ];
 
-      dimension = { length: 1, width: 1, height: 10 };
-      const giftBox2 = new GiftBox(dimension);
-
-      strictEqual(giftBox1.giftWrapperArea(), 58);
-      strictEqual(giftBox2.giftWrapperArea(), 43);
-    });
+    deepStrictEqual(actual, expected);
   });
+});
 
-  describe("createGiftBoxes", () => {
-    it("should generate 0 gift boxes when no dimension is specified", (context) => {
-      const dimensions = "";
-      const createGiftBox = context.mock.fn();
-      const actual = createGiftBoxes(dimensions, createGiftBox);
-      const expected = [];
+describe("determineRibbonLength", () => {
+  it("should be the lenght of ribbon to wrap plus feet of ribbon for the bow", () => {
+    let dimension = { length: 2, width: 3, height: 4 };
+    const giftBox1 = new GiftBox(dimension);
 
-      deepStrictEqual(actual, expected);
-      strictEqual(createGiftBox.mock.callCount(), 0);
-    });
+    dimension = { length: 1, width: 1, height: 10 };
+    const giftBox2 = new GiftBox(dimension);
 
-    it("should gift boxes of specified dimensions", (context) => {
-      const dimensions = "7x5x27";
-      const createGiftBox = context.mock.fn();
+    const giftBoxes = [giftBox1, giftBox2];
+    const actual = determineRibbonLength(giftBoxes);
+    const expected = 48;
 
-      createGiftBoxes(dimensions, createGiftBox).length;
-
-      strictEqual(createGiftBox.mock.callCount(), 1);
-      deepStrictEqual(createGiftBox.mock.calls[0].arguments[0], {
-        length: 7,
-        width: 5,
-        height: 27,
-      });
-    });
-
-    describe("volume", () => {
-      it("should be 1 when all dimensions are of 1 unit", () => {
-        const dimension = { length: 1, width: 1, height: 1 };
-        const giftBox = new GiftBox(dimension);
-
-        const actual = giftBox.volume();
-        const expected = 1;
-
-        strictEqual(actual, expected);
-      });
-
-      it("should be the area of the base times height", () => {
-        const dimension = { length: 2, width: 3, height: 4 };
-        const giftBox = new GiftBox(dimension);
-
-        const actual = giftBox.volume();
-        const expected = 24;
-
-        strictEqual(actual, expected);
-      });
-    });
-
-    describe("ribbonLength", () => {
-      it("should be 0 when all dimensions are 0", () => {
-        const dimension = { length: 0, width: 0, height: 0 };
-        const giftBox = new GiftBox(dimension);
-
-        const actual = giftBox.ribbonLength();
-        const expected = 0;
-
-        strictEqual(actual, expected);
-      });
-
-      it("should be smallest perimeter of any one face", () => {
-        const dimension = { length: 2, width: 3, height: 4 };
-        const giftBox = new GiftBox(dimension);
-
-        const actual = giftBox.ribbonLength();
-        const expected = 34;
-
-        strictEqual(actual, expected);
-      });
-    });
+    strictEqual(actual, expected);
   });
+});
 
-  describe("determineRequiredGiftWrapper", () => {
-    it("should sum up all the gift wrapper's area", () => {
-      let dimension = { length: 2, width: 3, height: 4 };
-      const giftBox1 = new GiftBox(dimension);
+describe("determineRequiredGiftWrapper", () => {
+  it("should sum up all the gift wrapper's area", () => {
+    let dimension = { length: 2, width: 3, height: 4 };
+    const giftBox1 = new GiftBox(dimension);
 
-      dimension = { length: 1, width: 1, height: 10 };
-      const giftBox2 = new GiftBox(dimension);
+    dimension = { length: 1, width: 1, height: 10 };
+    const giftBox2 = new GiftBox(dimension);
 
-      const giftBoxes = [giftBox1, giftBox2];
+    const giftBoxes = [giftBox1, giftBox2];
+    const actual = determineRequiredGiftWrapper(giftBoxes);
+    const expected = 101;
 
-      const actual = determineRibbonLength(giftBoxes);
+    strictEqual(actual, expected);
+  });
+});
 
-      const expected = 48;
+describe("getDimensionOfSingleBox", () => {
+  it("should generate dimensions from the given string", () => {
+    let rawDimensions = "2x3x4";
 
-      strictEqual(actual, expected);
-    });
+    const actual = getSingleBoxDimensions(rawDimensions);
+    const expected = { length: 2, width: 3, height: 4 };
+
+    deepStrictEqual(actual, expected);
   });
 });

@@ -1,67 +1,23 @@
-class GiftBox {
-  #length;
-  #width;
-  #height;
+const { GiftBox } = require("./gift-box");
 
-  constructor({ length, width, height }) {
-    this.#length = length;
-    this.#width = width;
-    this.#height = height;
-  }
+const sumAll = (list) => list.reduce(sum, 0);
 
-  surfaceArea() {
-    const l = this.#length;
-    const h = this.#height;
-    const w = this.#width;
+const sum = (a, b) => a + b;
 
-    return 2 * (l * w + w * h + h * l);
-  }
+const getSingleBoxDimensions = (dimensions) => {
+  const [length, width, height] = dimensions.split("x").map((n) => parseInt(n));
 
-  #arrangeDimensionsInAsc() {
-    const dimensions = [this.#length, this.#width, this.#height];
-
-    return dimensions.sort((a, b) => a - b);
-  }
-
-  #slackArea() {
-    const [firstSmallestSide, secondSmallestSide] = this.#arrangeDimensionsInAsc();
-
-    return firstSmallestSide * secondSmallestSide;
-  }
-
-  giftWrapperArea() {
-    return this.surfaceArea() + this.#slackArea();
-  }
-
-  volume() {
-    return this.#height * this.#width * this.#length;
-  }
-
-  ribbonLength() {
-    const [firstSmallestSide, secondSmallestSide] = this.#arrangeDimensionsInAsc();
-    return 2 * (firstSmallestSide + secondSmallestSide) + this.volume();
-  }
-}
-
-const format = (giftBoxDimension) => {
-  const [length, width, height] = giftBoxDimension.split("x").map((n) => +n);
   return { length, width, height };
 };
 
-const createGiftBox = (dimension) => new GiftBox(dimension);
+const extractDimensions = (rawDimensions) =>
+  rawDimensions.split("\n").map(getSingleBoxDimensions);
 
-const createGiftBoxes = (dimensionsAsText, giftMaker) => {
-  if (dimensionsAsText.length === 0) return [];
+const createGiftBoxes = (rawDimensions) => {
+  const dimensions = extractDimensions(rawDimensions);
 
-  const dimensions = dimensionsAsText.split("\n").map(format);
-
-  return dimensions.map(giftMaker);
+  return dimensions.map((dimension) => new GiftBox(dimension));
 };
-
-const sumAll = (list) =>
-  list.reduce((sum, element) => {
-    return sum + element;
-  }, 0);
 
 const determineRequiredGiftWrapper = (giftBoxes) => {
   const areaOfwrappers = giftBoxes.map((giftBox) => giftBox.giftWrapperArea());
@@ -75,9 +31,9 @@ const determineRibbonLength = (giftBoxes) => {
 };
 
 module.exports = {
-  GiftBox,
   createGiftBoxes,
-  createGiftBox,
   determineRequiredGiftWrapper,
   determineRibbonLength,
+  extractDimensions,
+  getSingleBoxDimensions,
 };
