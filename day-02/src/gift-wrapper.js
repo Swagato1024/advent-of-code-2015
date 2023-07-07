@@ -17,24 +17,29 @@ class GiftBox {
     return 2 * (l * w + w * h + h * l);
   }
 
-  #takeSmallerSides(noOfSides) {
+  #arrangeDimensionsInAsc() {
     const dimensions = [this.#length, this.#width, this.#height];
 
-    return dimensions.sort((a, b) => a - b).slice(0, noOfSides);
+    return dimensions.sort((a, b) => a - b);
   }
 
-  #areaOfSmallestSide() {
-    const [firstSmallestSide, secondSmallestSide] = this.#takeSmallerSides(2);
+  #slackArea() {
+    const [firstSmallestSide, secondSmallestSide] = this.#arrangeDimensionsInAsc();
 
     return firstSmallestSide * secondSmallestSide;
   }
 
   giftWrapperArea() {
-    return this.surfaceArea() + this.#areaOfSmallestSide();
+    return this.surfaceArea() + this.#slackArea();
   }
 
   volume() {
     return this.#height * this.#width * this.#length;
+  }
+
+  ribbonLength() {
+    const [firstSmallestSide, secondSmallestSide] = this.#arrangeDimensionsInAsc();
+    return 2 * (firstSmallestSide + secondSmallestSide) + this.volume();
   }
 }
 
@@ -63,9 +68,16 @@ const determineRequiredGiftWrapper = (giftBoxes) => {
   return sumAll(areaOfwrappers);
 };
 
+const determineRibbonLength = (giftBoxes) => {
+  const ribbonLengths = giftBoxes.map((giftBox) => giftBox.ribbonLength());
+
+  return sumAll(ribbonLengths);
+};
+
 module.exports = {
   GiftBox,
   createGiftBoxes,
   createGiftBox,
   determineRequiredGiftWrapper,
+  determineRibbonLength,
 };

@@ -4,7 +4,7 @@ const {
   GiftBox,
   createGiftBoxes,
   determineRequiredGiftWrapper,
-  createGiftBox,
+  determineRibbonLength,
 } = require("../src/gift-wrapper");
 
 describe("GiftBox", () => {
@@ -76,10 +76,42 @@ describe("GiftBox", () => {
 
         const actual = giftBox.volume();
         const expected = 1;
-        
+
         strictEqual(actual, expected);
-      })
-    })
+      });
+
+      it("should be the area of the base times height", () => {
+        const dimension = { length: 2, width: 3, height: 4 };
+        const giftBox = new GiftBox(dimension);
+
+        const actual = giftBox.volume();
+        const expected = 24;
+
+        strictEqual(actual, expected);
+      });
+    });
+
+    describe("ribbonLength", () => {
+      it("should be 0 when all dimensions are 0", () => {
+        const dimension = { length: 0, width: 0, height: 0 };
+        const giftBox = new GiftBox(dimension);
+
+        const actual = giftBox.ribbonLength();
+        const expected = 0;
+
+        strictEqual(actual, expected);
+      });
+
+      it("should be smallest perimeter of any one face", () => {
+        const dimension = { length: 2, width: 3, height: 4 };
+        const giftBox = new GiftBox(dimension);
+
+        const actual = giftBox.ribbonLength();
+        const expected = 34;
+
+        strictEqual(actual, expected);
+      });
+    });
   });
 
   describe("determineRequiredGiftWrapper", () => {
@@ -92,10 +124,9 @@ describe("GiftBox", () => {
 
       const giftBoxes = [giftBox1, giftBox2];
 
-      const actual = determineRequiredGiftWrapper(giftBoxes);
-      console.log(actual);
+      const actual = determineRibbonLength(giftBoxes);
 
-      const expected = 101;
+      const expected = 48;
 
       strictEqual(actual, expected);
     });
