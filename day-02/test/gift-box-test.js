@@ -1,5 +1,5 @@
 const { describe, it } = require("node:test");
-const { strictEqual } = require("assert");
+const { strictEqual, ok } = require("assert");
 const { GiftBox } = require("../src/gift-box");
 
 describe("GiftBox", () => {
@@ -26,16 +26,25 @@ describe("GiftBox", () => {
     });
   });
 
-  describe("wrapperArea", () => {
-    it("should  be the sum of surface area and the area of extra paper", () => {
+  describe("smallestPerimeter", () => {
+    it("should be 0 when all dimensions are of 0 unit", () => {
+      let dimension = { length: 0, width: 0, height: 0 };
+      const giftBox = new GiftBox(dimension);
+
+      const actual = giftBox.smallestPerimeter();
+      const expected = 0;
+
+      strictEqual(actual, expected);
+    });
+
+    it("should be the sum of smallest and second smallest side", () => {
       let dimension = { length: 2, width: 3, height: 4 };
-      const giftBox1 = new GiftBox(dimension);
+      const giftBox = new GiftBox(dimension);
 
-      dimension = { length: 1, width: 1, height: 10 };
-      const giftBox2 = new GiftBox(dimension);
+      const actual = giftBox.smallestPerimeter();
+      const expected = 5;
 
-      strictEqual(giftBox1.wrapperArea(), 58);
-      strictEqual(giftBox2.wrapperArea(), 43);
+      strictEqual(actual, expected);
     });
   });
 
@@ -61,23 +70,13 @@ describe("GiftBox", () => {
     });
   });
 
-  describe("ribbonLength", () => {
-    it("should be 0 when all dimensions are 0", () => {
+  describe("slackArea", () => {
+    it("should be 0 when all dimensions are of 0 unit", () => {
       const dimension = { length: 0, width: 0, height: 0 };
       const giftBox = new GiftBox(dimension);
 
-      const actual = giftBox.ribbonLength();
+      const actual = giftBox.slackArea();
       const expected = 0;
-
-      strictEqual(actual, expected);
-    });
-
-    it("should be smallest perimeter of any one face when dimensions are non zero", () => {
-      const dimension = { length: 2, width: 3, height: 4 };
-      const giftBox = new GiftBox(dimension);
-
-      const actual = giftBox.ribbonLength();
-      const expected = 34;
 
       strictEqual(actual, expected);
     });
