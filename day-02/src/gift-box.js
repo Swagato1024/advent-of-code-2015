@@ -30,7 +30,7 @@ class GiftBox {
     return firstSmallestSide * secondSmallestSide;
   }
 
-  giftWrapperArea() {
+  wrapperArea() {
     return this.surfaceArea() + this.#slackArea();
   }
 
@@ -41,9 +41,23 @@ class GiftBox {
   ribbonLength() {
     const [firstSmallestSide, secondSmallestSide] =
       this.#arrangeDimensionsInAsc();
-      
+
     return 2 * (firstSmallestSide + secondSmallestSide) + this.volume();
   }
 }
 
-module.exports = {GiftBox};
+const createGiftBox = (rawDimensions) => {
+  const [length, width, height] = rawDimensions
+    .split("x")
+    .map((n) => parseInt(n));
+
+  return new GiftBox({ length, width, height });
+};
+
+const createGiftBoxes = (rawDimensions) => {
+  const dimensions = rawDimensions.split("\n");
+
+  return dimensions.map(createGiftBox);
+};
+
+module.exports = { GiftBox, createGiftBoxes };

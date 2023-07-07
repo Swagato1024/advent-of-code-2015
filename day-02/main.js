@@ -1,7 +1,7 @@
 const fs = require("fs");
 
+const { createGiftBoxes } = require("./src/gift-box");
 const {
-  createGiftBoxes,
   determineRibbonLength,
   determineRequiredGiftWrapper,
 } = require("./src/gift-wrapper");

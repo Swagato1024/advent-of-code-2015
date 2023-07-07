@@ -26,7 +26,7 @@ describe("GiftBox", () => {
     });
   });
 
-  describe("giftWrapperArea", () => {
+  describe("wrapperArea", () => {
     it("should  be the sum of surface area and the area of extra paper", () => {
       let dimension = { length: 2, width: 3, height: 4 };
       const giftBox1 = new GiftBox(dimension);
@@ -34,8 +34,8 @@ describe("GiftBox", () => {
       dimension = { length: 1, width: 1, height: 10 };
       const giftBox2 = new GiftBox(dimension);
 
-      strictEqual(giftBox1.giftWrapperArea(), 58);
-      strictEqual(giftBox2.giftWrapperArea(), 43);
+      strictEqual(giftBox1.wrapperArea(), 58);
+      strictEqual(giftBox2.wrapperArea(), 43);
     });
   });
 
