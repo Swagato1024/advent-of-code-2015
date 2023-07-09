@@ -25,22 +25,22 @@ describe("countVisitedHouses", () => {
 });
 
 describe("findNextCoordinate", () => {
-  it("should locate the next coordinate in the East when direction is '>'", () => {
+  it("should give the East coordinate that lies next to the given coordinate", () => {
     let coordinate = findNextCoordinate({ x: 0, y: 0 }, ">");
     assert.deepStrictEqual(coordinate, { x: 1, y: 0 });
   });
-
-  it("should locate the next coordinate in the West when direction is '<'", () => {
+  should;
+  it("should give the West coordinate that lies next to the given coordinate", () => {
     coordinate = findNextCoordinate({ x: 1, y: 0 }, "<");
     assert.deepStrictEqual(coordinate, { x: 0, y: 0 });
   });
 
-  it("should locate the next coordinate in the North when when direction is '^'", () => {
+  it("should give the North coordinate that lies next to the given coordinate", () => {
     coordinate = findNextCoordinate({ x: 0, y: 0 }, "^");
     assert.deepStrictEqual(coordinate, { x: 0, y: 1 });
   });
 
-  it("should locate the next coordinate in the South when when direction is 'v'", () => {
+  it("should give the South coordinate that lies next to the given coordinate", () => {
     coordinate = findNextCoordinate({ x: 0, y: 1 }, "v");
     assert.deepStrictEqual(coordinate, { x: 0, y: 0 });
   });
