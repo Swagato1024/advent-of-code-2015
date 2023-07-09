@@ -14,16 +14,16 @@ const findNextCoordinate = (position, direction) => {
 
 const generateHouseId = ({ x, y }) => `${x}:${y}`;
 
-const countVisitedHouses = (directions) => {
+const countVisitedHouses = ([...directions]) => {
   let coordinate = { x: 0, y: 0 };
   const firstHouseId = `0:0`;
   const visitedHouses = new Set([firstHouseId]);
 
-  for (const direction of directions) {
+  directions.forEach((direction) => {
     coordinate = findNextCoordinate(coordinate, direction);
     const houseId = generateHouseId(coordinate);
     visitedHouses.add(houseId);
-  }
+  });
 
   return visitedHouses.size;
 };
