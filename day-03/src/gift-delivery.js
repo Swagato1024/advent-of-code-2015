@@ -28,7 +28,29 @@ const countVisitedHouses = ([...directions]) => {
   return visitedHouses.size;
 };
 
+const countVisitedHousesBySantas = ([...directions]) => {
+  const firstHouseId = `0:0`;
+  const visitedHouses = new Set([firstHouseId]);
+  const giftDeliverersCoordinate = [
+    { x: 0, y: 0 },
+    { x: 0, y: 0 },
+  ];
+
+  directions.forEach((direction, index) => {
+    const santaId = index % giftDeliverersCoordinate.length;
+    const santaCoordinate = giftDeliverersCoordinate[santaId];
+    
+    const coordinate = findNextCoordinate(santaCoordinate, direction);
+    giftDeliverersCoordinate[santaId] = coordinate;
+    const houseId = generateHouseId(coordinate);
+    visitedHouses.add(houseId);
+  });
+
+  return visitedHouses.size;
+};
+
 module.exports = {
   countVisitedHouses,
   findNextCoordinate,
+  countVisitedHousesBySantas,
 };
