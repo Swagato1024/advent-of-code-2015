@@ -26,22 +26,22 @@ describe("countVisitedHouses", () => {
 
 describe("findNextCoordinate", () => {
   it("should give the East coordinate that lies next to the given coordinate", () => {
-    let coordinate = findNextCoordinate({ x: 0, y: 0 }, ">");
+    const coordinate = findNextCoordinate({ x: 0, y: 0 }, ">");
     assert.deepStrictEqual(coordinate, { x: 1, y: 0 });
   });
-  should;
+  
   it("should give the West coordinate that lies next to the given coordinate", () => {
-    coordinate = findNextCoordinate({ x: 1, y: 0 }, "<");
+    const coordinate = findNextCoordinate({ x: 1, y: 0 }, "<");
     assert.deepStrictEqual(coordinate, { x: 0, y: 0 });
   });
 
   it("should give the North coordinate that lies next to the given coordinate", () => {
-    coordinate = findNextCoordinate({ x: 0, y: 0 }, "^");
+    const coordinate = findNextCoordinate({ x: 0, y: 0 }, "^");
     assert.deepStrictEqual(coordinate, { x: 0, y: 1 });
   });
 
   it("should give the South coordinate that lies next to the given coordinate", () => {
-    coordinate = findNextCoordinate({ x: 0, y: 1 }, "v");
+    const coordinate = findNextCoordinate({ x: 0, y: 1 }, "v");
     assert.deepStrictEqual(coordinate, { x: 0, y: 0 });
   });
 });
