@@ -17,26 +17,31 @@ describe("countVisitedHouses", () => {
     assert.strictEqual(countVisitedHouses("^"), 2);
     assert.strictEqual(countVisitedHouses("v"), 2);
   });
+
+  it("should count unique houses when multiple directions are provided", () => {
+    assert.strictEqual(countVisitedHouses("^>v<"), 4);
+    assert.strictEqual(countVisitedHouses("^v^v^v^v^v"), 2);
+  });
 });
 
 describe("findNextCoordinate", () => {
-  it("should locate the next coordinate in the East when > is given as direction", () => {
+  it("should locate the next coordinate in the East when direction is '>'", () => {
     let coordinate = findNextCoordinate({ x: 0, y: 0 }, ">");
-    assert.deepstrictEqual(coordinate, { x: 1, y: 0 });
+    assert.deepStrictEqual(coordinate, { x: 1, y: 0 });
   });
 
-  it("should locate the next coordinate in the West when < is given as direction", () => {
+  it("should locate the next coordinate in the West when direction is '<'", () => {
     coordinate = findNextCoordinate({ x: 1, y: 0 }, "<");
-    assert.deepstrictEqual(coordinate, { x: 0, y: 0 });
+    assert.deepStrictEqual(coordinate, { x: 0, y: 0 });
   });
 
-  it("should locate the next coordinate in the North when ^ is given as direction", () => {
+  it("should locate the next coordinate in the North when when direction is '^'", () => {
     coordinate = findNextCoordinate({ x: 0, y: 0 }, "^");
-    assert.deepstrictEqual(coordinate, { x: 0, y: 1 });
+    assert.deepStrictEqual(coordinate, { x: 0, y: 1 });
   });
 
-  it("should locate the next coordinate in the South when v is given as direction", () => {
+  it("should locate the next coordinate in the South when when direction is 'v'", () => {
     coordinate = findNextCoordinate({ x: 0, y: 1 }, "v");
-    assert.deepstrictEqual(coordinate, { x: 0, y: 0 });
+    assert.deepStrictEqual(coordinate, { x: 0, y: 0 });
   });
 });
