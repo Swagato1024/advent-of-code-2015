@@ -1,82 +1,42 @@
 const { describe, it } = require("node:test");
-const { strictEqual, deepStrictEqual } = require("assert");
-const { countVisitedHouses, moveToEast, moveToNorth, moveToWest, moveToSouth, decideDirectionToMove, removeDuplicates } = require("../src/gift-delivery");
+const assert = require("assert");
+
+const {
+  countVisitedHouses,
+  findNextCoordinate,
+} = require("../src/gift-delivery");
 
 describe("countVisitedHouses", () => {
-  it("should count be 1 when no signal is send", () => {
-    const actual = countVisitedHouses("");
-    const expected = 1;
-
-    strictEqual(actual, expected);
+  it("should be 1 when no directions are provided", () => {
+    assert.strictEqual(countVisitedHouses(""), 1);
   });
 
-  it("should count be 2 when single signal is send", () => {
-    const actual = countVisitedHouses(">");
-    const expected = 2;
-
-    strictEqual(actual, expected);
+  it("should be 2 when single direction is provided", () => {
+    assert.strictEqual(countVisitedHouses("<"), 2);
+    assert.strictEqual(countVisitedHouses("<"), 2);
+    assert.strictEqual(countVisitedHouses("^"), 2);
+    assert.strictEqual(countVisitedHouses("v"), 2);
   });
 });
 
-describe("decideDirectionToMove", () => {
-  it("should decide to move To East for signal >", () => {
-    const actual = decideDirectionToMove(">");
-    const expected = moveToEast;
+describe("findNextCoordinate", () => {
+  it("should locate the next coordinate in the East when > is given as direction", () => {
+    let coordinate = findNextCoordinate({ x: 0, y: 0 }, ">");
+    assert.deepstrictEqual(coordinate, { x: 1, y: 0 });
+  });
 
-    strictEqual(actual, expected);
+  it("should locate the next coordinate in the West when < is given as direction", () => {
+    coordinate = findNextCoordinate({ x: 1, y: 0 }, "<");
+    assert.deepstrictEqual(coordinate, { x: 0, y: 0 });
+  });
+
+  it("should locate the next coordinate in the North when ^ is given as direction", () => {
+    coordinate = findNextCoordinate({ x: 0, y: 0 }, "^");
+    assert.deepstrictEqual(coordinate, { x: 0, y: 1 });
+  });
+
+  it("should locate the next coordinate in the South when v is given as direction", () => {
+    coordinate = findNextCoordinate({ x: 0, y: 1 }, "v");
+    assert.deepstrictEqual(coordinate, { x: 0, y: 0 });
   });
 });
-
-describe("moveToEast", () => {
-  it("should increment the x coordinate of current coordinate", () => {
-    const coordinate = {x: 0, y: 0};
-
-    const actual = moveToEast(coordinate);
-    const expected = {x: 1, y: 0};
-
-    deepStrictEqual(actual, expected);
-  })
-})
-
-describe("moveToWest", () => {
-  it("should decrement the x coordinate of current coordinate", () => {
-    const coordinate = {x: 1, y: 0};
-
-    const actual = moveToWest(coordinate);
-    const expected = {x: 0, y: 0};
-
-    deepStrictEqual(actual, expected);
-  })
-})
-
-describe("moveToNorth", () => {
-  it("should increment the y coordinate of current coordinate", () => {
-    const coordinate = {x: 0, y: 0};
-
-    const actual = moveToNorth(coordinate);
-    const expected = {x: 0, y: 1};
-
-    deepStrictEqual(actual, expected);
-  })
-})
-
-describe("moveToSouth", () => {
-  it("should decrement the y coordinate of current coordinate", () => {
-    const coordinate = {x: 0, y: 1};
-
-    const actual = moveToSouth(coordinate);
-    const expected = {x: 0, y: 0};
-
-    deepStrictEqual(actual, expected);
-  })
-})
-
-describe("removeDuplicates", () => {
-  it("should remove empty list when empty list is passed", () => {
-    const actual = removeDuplicates([]);
-    const expected = [];
-
-    deepStrictEqual(actual, expected);
-  })
-})
-

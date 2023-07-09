@@ -1,58 +1,34 @@
-const moveToEast = ({ x, y }) => {
-  x += 1;
-  return { x, y };
-};
+const findNextCoordinate = (position, direction) => {
+  const { x, y } = position;
 
-const moveToWest = ({ x, y }) => {
-  x -= 1;
-  return { x, y };
-};
-
-const moveToNorth = ({ x, y }) => {
-  y += 1;
-  return { x, y };
-};
-
-const moveToSouth = ({ x, y }) => {
-  y -= 1;
-  return { x, y };
-};
-
-const decideDirectionToMove = (signal) => {
   const decoder = {
-    ">": moveToEast,
-    "<": moveToWest,
-    "^": moveToNorth,
-    v: moveToSouth,
+    ">": { dx: 1, dy: 0 },
+    "<": { dx: -1, dy: 0 },
+    "^": { dx: 0, dy: 1 },
+    v: { dx: 0, dy: -1 },
   };
 
-  return decoder[signal];
+  const { dx, dy } = decoder[direction];
+  return { x: x + dx, y: y + dy };
 };
 
-const removeDuplicates = () => {
-  return [];
-};
+const generateHouseId = ({ x, y }) => `${x}:${y}`;
 
-const countVisitedHouses = (signals) => {
-  let currentCoordinate = { x: 0, y: 0 };
-  const visitedHouses = [currentCoordinate];
+const countVisitedHouses = (directions) => {
+  let coordinate = { x: 0, y: 0 };
+  const firstHouseId = `0:0`;
+  const visitedHouses = new Set([firstHouseId]);
 
-  for (const signal of signals) {
-    const directionToMove = decideDirectionToMove(signal);
-    currentCoordinate = directionToMove(currentCoordinate);
-
-    visitedHouses.push(currentCoordinate);
+  for (const direction of directions) {
+    coordinate = findNextCoordinate(coordinate, direction);
+    const houseId = generateHouseId(coordinate);
+    visitedHouses.add(houseId);
   }
 
-  return visitedHouses.length;
+  return visitedHouses.size;
 };
 
 module.exports = {
   countVisitedHouses,
-  decideDirectionToMove,
-  moveToEast,
-  moveToWest,
-  moveToNorth,
-  moveToSouth,
-  removeDuplicates,
+  findNextCoordinate,
 };
