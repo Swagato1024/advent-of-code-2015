@@ -1,14 +1,14 @@
 const findNextCoordinate = (position, direction) => {
   const { x, y } = position;
 
-  const decoder = {
+  const displacements = {
     ">": { dx: 1, dy: 0 },
     "<": { dx: -1, dy: 0 },
     "^": { dx: 0, dy: 1 },
     v: { dx: 0, dy: -1 },
   };
 
-  const { dx, dy } = decoder[direction];
+  const { dx, dy } = displacements[direction];
   return { x: x + dx, y: y + dy };
 };
 
