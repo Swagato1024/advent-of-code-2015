@@ -28,16 +28,16 @@ const countVisitedHouses = ([...directions]) => {
   return visitedHouses.size;
 };
 
+const getInitialCoordiantes = (noOfSantas) =>
+  new Array(noOfSantas).fill().map(() => ({ x: 0, y: 0 }));
+
 const countVisitedHousesBySantas = ([...directions]) => {
   const firstHouseId = generateHouseId({ x: 0, y: 0 });
   const visitedHouses = {
     [firstHouseId]: { coordinate: { x: 0, y: 0 }, noOfTimesVisited: 1 },
   };
 
-  const giftCarrierCoordinates = [
-    { x: 0, y: 0 },
-    { x: 0, y: 0 },
-  ];
+  const giftCarrierCoordinates = getInitialCoordiantes(2);
 
   directions.forEach((direction, index) => {
     const carrierId = index % giftCarrierCoordinates.length;
