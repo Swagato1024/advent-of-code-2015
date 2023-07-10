@@ -16,7 +16,7 @@ const generateHouseId = ({ x, y }) => `${x}:${y}`;
 
 const countVisitedHouses = ([...directions]) => {
   let santaCoordinate = { x: 0, y: 0 };
-  const firstHouseId = `0:0`;
+  const firstHouseId = generateHouseId(santaCoordinate);
   const visitedHouses = new Set([firstHouseId]);
 
   directions.forEach((direction) => {
@@ -39,7 +39,7 @@ const countVisitedHousesBySantas = ([...directions]) => {
   directions.forEach((direction, index) => {
     const carrierId = index % giftCarrierCoordinates.length;
     const carrierCoordinate = giftCarrierCoordinates[carrierId];
-    
+
     const coordinate = findNextCoordinate(carrierCoordinate, direction);
     giftCarrierCoordinates[carrierId] = coordinate;
     const houseId = generateHouseId(coordinate);
