@@ -15,13 +15,13 @@ const findNextCoordinate = (position, direction) => {
 const generateHouseId = ({ x, y }) => `${x}:${y}`;
 
 const countVisitedHouses = ([...directions]) => {
-  let coordinate = { x: 0, y: 0 };
+  let santaCoordinate = { x: 0, y: 0 };
   const firstHouseId = `0:0`;
   const visitedHouses = new Set([firstHouseId]);
 
   directions.forEach((direction) => {
-    coordinate = findNextCoordinate(coordinate, direction);
-    const houseId = generateHouseId(coordinate);
+    santaCoordinate = findNextCoordinate(santaCoordinate, direction);
+    const houseId = generateHouseId(santaCoordinate);
     visitedHouses.add(houseId);
   });
 
@@ -31,17 +31,17 @@ const countVisitedHouses = ([...directions]) => {
 const countVisitedHousesBySantas = ([...directions]) => {
   const firstHouseId = `0:0`;
   const visitedHouses = new Set([firstHouseId]);
-  const giftDeliverersCoordinate = [
+  const giftCarrierCoordinates = [
     { x: 0, y: 0 },
     { x: 0, y: 0 },
   ];
 
   directions.forEach((direction, index) => {
-    const santaId = index % giftDeliverersCoordinate.length;
-    const santaCoordinate = giftDeliverersCoordinate[santaId];
+    const carrierId = index % giftCarrierCoordinates.length;
+    const carrierCoordinate = giftCarrierCoordinates[carrierId];
     
-    const coordinate = findNextCoordinate(santaCoordinate, direction);
-    giftDeliverersCoordinate[santaId] = coordinate;
+    const coordinate = findNextCoordinate(carrierCoordinate, direction);
+    giftCarrierCoordinates[carrierId] = coordinate;
     const houseId = generateHouseId(coordinate);
     visitedHouses.add(houseId);
   });
