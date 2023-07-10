@@ -5,7 +5,7 @@ const findNextCoordinate = (position, direction) => {
     ">": { dx: 1, dy: 0 },
     "<": { dx: -1, dy: 0 },
     "^": { dx: 0, dy: 1 },
-    v: { dx: 0, dy: -1 },
+    "v": { dx: 0, dy: -1 },
   };
 
   const { dx, dy } = displacements[direction];
@@ -29,8 +29,11 @@ const countVisitedHouses = ([...directions]) => {
 };
 
 const countVisitedHousesBySantas = ([...directions]) => {
-  const firstHouseId = `0:0`;
-  const visitedHouses = new Set([firstHouseId]);
+  const firstHouseId = generateHouseId({ x: 0, y: 0 });
+  const visitedHouses = {
+    [firstHouseId]: { coordinate: { x: 0, y: 0 }, noOfTimesVisited: 1 },
+  };
+
   const giftCarrierCoordinates = [
     { x: 0, y: 0 },
     { x: 0, y: 0 },
@@ -43,10 +46,14 @@ const countVisitedHousesBySantas = ([...directions]) => {
     const coordinate = findNextCoordinate(carrierCoordinate, direction);
     giftCarrierCoordinates[carrierId] = coordinate;
     const houseId = generateHouseId(coordinate);
-    visitedHouses.add(houseId);
+
+    if (!(houseId in visitedHouses))
+      visitedHouses[houseId] = { coordinate, noOfTimesVisited: 0 };
+
+    visitedHouses[houseId].noOfTimesVisited++;
   });
 
-  return visitedHouses.size;
+  return Object.keys(visitedHouses).length;
 };
 
 module.exports = {
