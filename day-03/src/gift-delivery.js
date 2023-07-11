@@ -32,15 +32,18 @@ const getInitialCoordiantes = (noOfSantas) =>
   new Array(noOfSantas).fill().map(() => ({ x: 0, y: 0 }));
 
 const countVisitedHousesBySantas = ([...directions]) => {
+  let santa = { x: 0, y: 0 };
+  let roboSanta = { x: 0, y: 0 };
+
   const firstHouseId = generateHouseId({ x: 0, y: 0 });
   const visitedHouses = {
     [firstHouseId]: { coordinate: { x: 0, y: 0 }, noOfTimesVisited: 1 },
   };
 
-  const giftCarrierCoordinates = getInitialCoordiantes(2);
+  const giftCarrierCoordinates = [santa, roboSanta];
 
   directions.forEach((direction, index) => {
-    const carrierId = index % giftCarrierCoordinates.length;
+    const carrierId = index % 2;
     const carrierCoordinate = giftCarrierCoordinates[carrierId];
 
     const coordinate = findNextCoordinate(carrierCoordinate, direction);
