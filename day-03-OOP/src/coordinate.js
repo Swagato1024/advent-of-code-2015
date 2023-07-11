@@ -8,7 +8,6 @@ class Coordiante {
   }
 
   equals(coordinate) {
-    console.log()
     return this.#x === coordinate.#x && this.#y === coordinate.#y;
   }
 
